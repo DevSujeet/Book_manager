@@ -26,6 +26,9 @@ class _db_settings(BaseSettings):
     db_port:str = Field(alias='database_port')
     # db_schema: str = Field(alias='DATABASE_SCHEMA')
 
+    def __init__(self, **kwargs):
+        print("📦 Raw incoming values to _db_settings:", kwargs)
+        super().__init__(**kwargs)
 
 class CacheSettings(BaseSettings):
     model_config = SettingsConfigDict(

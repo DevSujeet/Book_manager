@@ -1,12 +1,11 @@
 from fastapi import FastAPI
 import uvicorn
-from src.config.configs import _db_settings, CacheSettings
-from typing import Dict
+from src.config.configs import CacheSettings
 import os
-from src.routes import intro
-from src.middleware.middleware import add_process_time, source_exception_handler
-from src.middleware.redis_middleware import RedisCacheMiddleware
-from src.exceptions.exception import SourceException
+from src.routes import intro, book
+from src.middleware.middleware import add_process_time
+# from src.middleware.redis_middleware import RedisCacheMiddleware
+# from src.exceptions.exception import SourceException
 # from fastapi_pagination import add_pagination
 from contextlib import asynccontextmanager
 from src.db import init_db
@@ -47,6 +46,7 @@ def create_app(lifespan:lifespan) -> FastAPI:
 def get_fastapi_routers():
     return [
         intro.router,
+        book.router,
     ]
 
 
@@ -54,5 +54,6 @@ app = create_app(lifespan=lifespan)
 # add_pagination(app)
 if __name__ == "__main__":
     uvicorn.run("main:app")
+
 
 
