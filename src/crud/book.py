@@ -8,7 +8,7 @@ from src.schemas.pagination.pagination import PageParams, paginate
 
 class BookCRUD(BaseCRUD):
     def all_book(self, page_params:PageParams):
-        query = self.db_session.query(BookData).order_by(asc(BookData.submitted_date))
+        query = self.db_session.query(BookData).order_by(asc(BookData.title))
         return paginate(page_params=page_params, query=query, ResponseSchema=BookResponseSchema, model=BookData)
         
 
