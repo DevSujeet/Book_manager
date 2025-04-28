@@ -1,7 +1,6 @@
-# from src.crud.activity import UserActivityCRUD
+
 from fastapi import HTTPException
 from src.db import get_session
-# from src.enum.actions import ActionType
 from src.schemas.book import BookCreateSchema
 from src.crud.book import BookCRUD
 from src.schemas.pagination.pagination import PageParams

@@ -15,7 +15,6 @@ router = APIRouter(
 
 @router.post('')
 async def create_book(book:BookCreateSchema) -> BookResponseSchema:
-    logger.info("Fetching database settings")
     created_book = create_book_entry(user_id="123", book=book)
     return created_book
 

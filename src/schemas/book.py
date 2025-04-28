@@ -21,14 +21,14 @@ class BookResponseSchema(BookCreateSchema):
     book_id: str 
 
 
-class ReviewCreateSchema(BaseModel):
-    book_id: str
-    user_id: str
-    review_text: Optional[str]
-    rating: int
+# class ReviewCreateSchema(BaseModel):
+#     book_id: str
+#     user_id: str
+#     review_text: Optional[str]
+#     rating: int
 
-    class Config:
-        from_attributes = True
+#     class Config:
+#         from_attributes = True
 
-class ReviewResponseSchema(ReviewCreateSchema):
-    id: str
+# class ReviewResponseSchema(ReviewCreateSchema):
+#     id: str
