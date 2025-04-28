@@ -2,7 +2,7 @@ from fastapi import FastAPI
 import uvicorn
 from src.config.configs import CacheSettings
 import os
-from src.routes import intro, book, auth, protected
+from src.routes import intro, book, auth, protected, user_book_review, user, book_summary
 from src.middleware.middleware import add_process_time
 # from src.middleware.redis_middleware import RedisCacheMiddleware
 # from src.exceptions.exception import SourceException
@@ -49,7 +49,9 @@ def get_fastapi_routers():
         protected.router,
         intro.router,
         book.router,
-        
+        user.router,
+        user_book_review.router,
+        book_summary.router
     ]
 
 

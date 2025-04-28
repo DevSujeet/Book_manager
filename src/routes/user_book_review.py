@@ -7,7 +7,7 @@ from src.config.configs import _db_settings
 # from src.schema.book import Book
 router = APIRouter(
     prefix="/user_book_review",
-    tags=["book"]
+    tags=["book_review"]
 )
 
 @router.post('')
