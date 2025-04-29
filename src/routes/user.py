@@ -19,11 +19,11 @@ async def create_user(user: UserCreate) -> UserResponse:
     created_user = create_user_entry(user_id="123", user=user)
     return created_user
 
-@router.post('/all')
-async def get_all_users(page_params: PageParams, response_model=PagedResponseSchema[UserResponse]):
+@router.post('/all', response_model=PagedResponseSchema[UserResponse])
+async def get_all_users(page_params: PageParams):
     logger.info("Fetching all users")
-    all_users = all_users(user_id="123", page_params=page_params)
-    return all_users
+    all_user = all_users(user_id="123", page_params=page_params)
+    return all_user
 
 @router.get('/{user_id}')
 async def get_user(user_id: str) -> Dict[str, str]:

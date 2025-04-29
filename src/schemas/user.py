@@ -15,7 +15,7 @@ class UserUpdate(BaseModel):
     preference: Optional[GenreEnum] = None
 
 class UserResponse(UserBase):
-    id: int
+    id: str
 
     class Config:
         from_attributes = True

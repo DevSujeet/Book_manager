@@ -9,7 +9,7 @@ class UserBookReview(Base):
 
     id = Column(String(36), primary_key=True, default=lambda: str(uuid.uuid4()), nullable=False)
     book_id = Column(String(36), ForeignKey('book.book_id'), nullable=False)
-    user_id = Column(Integer, ForeignKey('users.id'), nullable=False)
+    user_id = Column(String(36), ForeignKey('users.id'), nullable=False)
     user_review = Column(Text, nullable=True)
     rating_given = Column(Integer, nullable=True, 
                            doc="Rating must be between 1 and 5 if provided.")

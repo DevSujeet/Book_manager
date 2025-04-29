@@ -7,16 +7,16 @@ class UserBookReviewBase(BaseModel):
     user_review: Optional[str] = None
 
 class UserBookReviewCreate(UserBookReviewBase):
-    user_id: int
-    book_id: int
+    user_id: str
+    book_id: str
 
 class UserBookReviewUpdate(UserBookReviewBase):
     pass
 
 class UserBookReviewResponse(UserBookReviewBase):
-    id: int
-    user_id: int
-    book_id: int
+    id: str
+    user_id: str
+    book_id: str
     submitted_at: datetime
     
     class Config:

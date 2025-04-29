@@ -18,8 +18,8 @@ async def create_book(book:BookCreateSchema) -> BookResponseSchema:
     created_book = create_book_entry(user_id="123", book=book)
     return created_book
 
-@router.post('/all') 
-async def get_all_books(page_params: PageParams,response_model=PagedResponseSchema[BookResponseSchema]):
+@router.post('/all' ,response_model=PagedResponseSchema[BookResponseSchema]) 
+async def get_all_books(page_params: PageParams):
     logger.info("Fetching all books")
     all_books = all_book(user_id="123", page_params=page_params)
     return all_books

@@ -10,14 +10,14 @@ class BookSummaryBase(BaseModel):
     genre: Optional[GenreEnum] = None
 
 class BookSummaryCreate(BookSummaryBase):
-    book_id: int  # required during create
+    book_id: str  # required during create
 
 class BookSummaryUpdate(BookSummaryBase):
     pass
 
 class BookSummaryResponse(BookSummaryBase):
-    id: int
-    book_id: int
+    id: str
+    book_id: str
 
     class Config:
         from_attributes = True
