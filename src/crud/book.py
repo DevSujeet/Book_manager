@@ -60,3 +60,14 @@ class BookCRUD(BaseCRUD):
             return book
         else:
             raise HTTPException(status_code=404, detail="Book not found")
+        
+    def update_book_summary_genre(self, book_id: str, summary: str, genre: str):
+        book = self.get_book_by_id(id=book_id)
+        if book:
+            book.summary = summary
+            book.genre = genre
+            self.db_session.commit()
+            return book
+        else:
+            raise HTTPException(status_code=404, detail="Book not found")
+        

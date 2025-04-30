@@ -14,3 +14,33 @@ intelligent book management system
     -e POSTGRES_DB=ibm_db \
     -p 5432:5432 \
     -d postgres
+
+## Running Ollama + DeepSeek on MacBook M3
+    # Install Ollama if not installed
+    brew install ollama
+
+    #Option A: Run it once in terminal
+    # to start it once
+    /opt/homebrew/opt/ollama/bin/ollama serve
+
+    Option B (recommended): Start as background service
+    brew services start ollama
+
+    # Pull and Run DeepSeek model
+    ollama run deepseek-coder:1.3b
+
+    # Test it (optional)
+    curl http://localhost:11434/api/generate -d '{
+    "model": "deepseek-coder:1.3b",
+    "prompt": "Summarize this book content in 150 words and classify it as horror, romance, action, or thriller:\n\nA dark forest...",
+    "stream": false
+    }'
+
+# How to STOP or RESTART Ollama
+    brew services stop ollama
+
+# Restart Ollama service
+    brew services restart ollama
+
+# Check if Ollama is running
+    curl http://localhost:11434

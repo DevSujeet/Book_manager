@@ -1,7 +1,7 @@
-from fastapi import APIRouter, Depends
+from fastapi import APIRouter, Depends, UploadFile, BackgroundTasks, File, Form
 from fastapi.logger import logger
 from src.schemas.book import BookCreateSchema, BookResponseSchema
-from src.controller.book import create_book_entry, all_book, get_book_by_id
+from src.controller.book import create_book_entry, all_book, get_book_by_id, process_pdf_summary
 from src.config.configs import _db_settings
 from typing import Dict
 from src.config.log_config import logger
@@ -13,10 +13,41 @@ router = APIRouter(
     tags=["book"]
 )
 
-@router.post('')
-async def create_book(book:BookCreateSchema) -> BookResponseSchema:
+@router.post("")
+async def create_book(
+    background_tasks: BackgroundTasks,
+    title: str = Form(...),
+    author: str = Form(...),
+    isbn: str = Form(...),
+    publisher: str = Form(...),
+    publication_year: int = Form(...),
+    genre: str = Form(None),
+    language: str = Form(...),
+    pages: int = Form(...),
+    summary: str = Form(None),
+    file: UploadFile = File(None)
+) -> BookResponseSchema:
+
+    book = BookCreateSchema(
+        title=title,
+        author=author,
+        isbn=isbn,
+        publisher=publisher,
+        publication_year=publication_year,
+        genre=genre or "pending",
+        language=language,
+        pages=pages,
+        summary=summary or "Summary generation pending..."
+    )
+
     created_book = create_book_entry(user_id="123", book=book)
+
+    # If file uploaded, start background task
+    if file:
+        background_tasks.add_task(process_pdf_summary, created_book.book_id, file)
+
     return created_book
+
 
 @router.post('/all' ,response_model=PagedResponseSchema[BookResponseSchema]) 
 async def get_all_books(page_params: PageParams):
@@ -35,6 +66,8 @@ async def get_book_author(book_id: str) -> Dict[str, str]:
     logger.info(f"Fetching author for book with ID: {book_id}")
     # Simulate fetching book author logic
     return {"message": f"author of book with id {book_id}"}
+
+
 @router.get('/info')
 async def about() -> str:
     return "great book"

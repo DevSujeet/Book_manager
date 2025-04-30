@@ -53,7 +53,14 @@ class CacheSettings(BaseSettings):
     def cache_url(self) -> str:
         return f"redis://{self.cache_username}:{self.cache_password}@{self.cache_host}:{self.cache_port}"
     
+class OLlama_Settings(BaseSettings):
+    ollama_url: str = "http://localhost:11434"
 
+    model_config = SettingsConfigDict(
+        env_file='.env'
+    )
+    
+ollama_settings = OLlama_Settings()
 
 class OAUTH_Settings(BaseSettings):
     tenant_id: str

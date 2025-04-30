@@ -1,8 +1,5 @@
 from fastapi import APIRouter, Depends
 from fastapi.logger import logger
-from src.schemas.user import UserCreate, UserResponse
-from src.controller.user import create_user_entry, all_users, get_user_by_id, delete_user_by_id
-from src.config.configs import _db_settings
 from typing import Dict
 from src.config.log_config import logger
 from src.schemas.pagination.pagination import PageParams, PagedResponseSchema
