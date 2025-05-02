@@ -1,7 +1,7 @@
 from fastapi import APIRouter, Depends, UploadFile, BackgroundTasks, File, Form
 from fastapi.logger import logger
 from src.schemas.book import BookCreateSchema, BookResponseSchema
-from src.controller.book import create_book_entry, all_book, get_book_by_id, process_pdf_summary
+from src.controller.book import create_book_entry, all_book,delete_book_by_id, get_book_by_id, process_pdf_summary
 from src.config.configs import _db_settings
 from typing import Dict
 from src.config.log_config import logger
@@ -44,7 +44,11 @@ async def create_book(
 
     # If file uploaded, start background task
     if file:
-        background_tasks.add_task(process_pdf_summary, created_book.book_id, file)
+        # background_tasks.add_task(process_pdf_summary, created_book.get("book_id"), file)
+        file_bytes = await file.read()  # Read file *now*
+        background_tasks.add_task(
+            process_pdf_summary, created_book.get("book_id"), file_bytes
+        )
 
     return created_book
 
@@ -58,16 +62,11 @@ async def get_all_books(page_params: PageParams):
 @router.get('/{book_id}')   
 async def get_book(book_id: str) -> Dict[str, str]:
     logger.info(f"Fetching book with ID: {book_id}")
-    # Simulate fetching a book by ID logic
-    return {"message": f"book with id {book_id}"}
+    book = get_book_by_id(user_id="123", id=book_id)
+    return book
 
-@router.get('/{book_id}/author')
-async def get_book_author(book_id: str) -> Dict[str, str]:
-    logger.info(f"Fetching author for book with ID: {book_id}")
-    # Simulate fetching book author logic
-    return {"message": f"author of book with id {book_id}"}
-
-
-@router.get('/info')
-async def about() -> str:
-    return "great book"
+@router.delete('/{book_id}')
+async def delete_book(book_id: str) -> Dict[str, str]:
+    logger.info(f"Deleting book with ID: {book_id}")
+    deleted_book = delete_book_by_id(user_id="123", book_id=book_id)
+    return deleted_book

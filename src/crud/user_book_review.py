@@ -7,17 +7,14 @@ from src.crud.base_curd import BaseCRUD
 from src.schemas.pagination.pagination import PageParams, paginate
 
 class UserBookReviewCRUD(BaseCRUD):
-    # def all_users(self, page_params:PageParams):
-    #     query = self.db_session.query(User).order_by(asc(User.name))
-    #     return paginate(page_params=page_params, query=query, ResponseSchema=UserResponse, model=User)
-        
+
 
     def get_user_review_by_id(self, id:str):
         if not id:
-            raise HTTPException(status_code=400, detail="User ID must be provided")
+            raise HTTPException(status_code=400, detail="summary ID must be provided")
     
         filters = [UserBookReview.id == id]
-        query = self.db_session.query(UserBookReview).filter(and_(*filters)).order_by(asc(UserBookReview.submitted_date))
+        query = self.db_session.query(UserBookReview).filter(and_(*filters))
         user = query.first()
         if user:
             return user
