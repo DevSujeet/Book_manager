@@ -1,12 +1,18 @@
-## 🔧 `Dockerfile`
-FROM python:3.12-slim
+# Use official Python image
+FROM python:3.10
 
-WORKDIR /app
+# Set working directory
+WORKDIR /src
 
+# Copy requirements and install dependencies
 COPY requirements.txt .
-RUN pip install --no-cache-dir -r requirements.txt
+RUN pip3 install --no-cache-dir -r requirements.txt
 
-COPY ./src /app
-COPY .env .
+# Copy application code
+COPY . .
 
-CMD ["uvicorn", "app.main:app", "--host", "0.0.0.0", "--port", "8000"]
+# Expose FastAPI port
+EXPOSE 8000
+
+# Start FastAPI
+CMD ["uvicorn", "src.main:app", "--host", "0.0.0.0", "--port", "8000"]
