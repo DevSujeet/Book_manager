@@ -17,7 +17,7 @@ class BookCRUD(BaseCRUD):
             raise HTTPException(status_code=400, detail="Book ID must be provided")
     
         filters = [BookData.book_id == id]
-        query = self.db_session.query(BookData).filter(and_(*filters)).order_by(asc(BookData.submitted_date))
+        query = self.db_session.query(BookData).filter(and_(*filters))
         book = query.first()
         if book:
             return book

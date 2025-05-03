@@ -44,3 +44,13 @@ intelligent book management system
 
 # Check if Ollama is running
     curl http://localhost:11434
+
+
+
+## Reruning docker
+    docker-compose down --volumes --remove-orphans
+    docker-compose build --no-cache
+    docker-compose up --force-recreate
+    ----
+    docker-compose down --volumes --remove-orphans
+    docker-compose up --build

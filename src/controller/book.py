@@ -8,7 +8,7 @@ from src.schemas.book_summary import BookSummaryCreate
 from src.schemas.pagination.pagination import PageParams
 from src.utilities.pdf_reader import extract_text_from_pdf
 from src.config.log_config import logger
-from src.services.deepseek_service import generate_summary_and_genre
+from src.services.gen_ai_service import generate_summary_and_genre
 import tempfile
 import os
 import json

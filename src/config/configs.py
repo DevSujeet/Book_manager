@@ -54,12 +54,15 @@ class CacheSettings(BaseSettings):
         return f"redis://{self.cache_username}:{self.cache_password}@{self.cache_host}:{self.cache_port}"
     
 class OLlama_Settings(BaseSettings):
-    ollama_url: str = Field(default="http://localhost:11434")
+    ollama_url: str = Field(default="http://localhost:11434", alias="OLLAMA_URL")
+    ollama_model: str = Field(default="mistral:7b-instruct", alias="OLLAMA_MODEL")
 
     model_config = SettingsConfigDict(
         env_file='.env',
-        extra='ignore'  # Ignore extra env variables
+        extra='ignore',           # Ignore extra env variables
+        env_file_encoding='utf-8' # Optional: ensures UTF-8 encoding
     )
+
     
 ollama_settings = OLlama_Settings()
 

@@ -35,6 +35,19 @@ services:
     volumes:
       - redisdata:/data
 
+  # ollama:
+  #   image: ollama/ollama
+  #   container_name: ollama
+  #   ports:
+  #     - "11434:11434"
+  #   volumes:
+  #     - ollama-data:/root/.ollama
+  #   command: >
+  #     sh -c "
+  #       ollama serve &
+  #       sleep 2 &&
+  #       ollama run mistral:7b-instruct
+  #     "
   ollama:
     image: ollama/ollama
     container_name: ollama
@@ -42,6 +55,11 @@ services:
       - "11434:11434"
     volumes:
       - ollama-data:/root/.ollama
+      - ./ollama-entrypoint.sh:/ollama-entrypoint.sh
+    entrypoint: [ "/bin/bash", "/ollama-entrypoint.sh" ]
+    environment:
+      - OLLAMA_MODEL=${OLLAMA_MODEL}
+
 
 volumes:
   pgdata:
