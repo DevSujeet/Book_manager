@@ -26,6 +26,7 @@ def get_book_by_id(user_id:str, id:str):
 
 def create_book_entry(user_id: str, book:BookCreateSchema):
     with get_session() as session:
+        print("Creating book entry")
         book_obj = BookCRUD(db_session=session).create_book_entry(book=book)
         if not book_obj:
             raise HTTPException(status_code=400, detail="Book creation failed")
