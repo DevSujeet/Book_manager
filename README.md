@@ -51,6 +51,6 @@ intelligent book management system
     docker-compose down --volumes --remove-orphans
     docker-compose build --no-cache
     docker-compose up --force-recreate
-    ----
+    ---or---
     docker-compose down --volumes --remove-orphans
     docker-compose up --build
