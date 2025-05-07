@@ -73,3 +73,49 @@ intelligent book management system
     ---or---
     docker-compose down --volumes --remove-orphans
     docker-compose up --build
+
+# ENV file content
+
+    #postgresql+asyncpg://username:password@hostname:port/databasename
+    DEVELOPMENT_DATABASE_DRIVERNAME=postgresql
+    DEVELOPMENT_DATABASE_USERNAME=postgres  
+    DEVELOPMENT_DATABASE_PASSWORD=postgres  
+    # Use "db" when running via Docker Compose (container service name)
+    # Use "localhost" for local testing without Docker
+    DEVELOPMENT_DATABASE_HOST=db 
+    DEVELOPMENT_DATABASE_NAME=ibm_db 
+    DEVELOPMENT_DATABASE_PORT=5432
+
+
+
+    DEVELOPMENT_CACHE_DRIVERNAME=redis
+    DEVELOPMENT_CACHE_USERNAME=username@dev_database
+    DEVELOPMENT_CACHE_PASSWORD=pass123!
+    DEVELOPMENT_CACHE_HOST=redis 
+    DEVELOPMENT_CACHE_NAME=vodafone
+    DEVELOPMENT_CACHE_PORT=6379
+
+    # azure app registration
+    CLIENT_ID=b564554a-xxxx-4583-xxxx-3b70daxxxx82
+    CLIENT_SECRET=87w8Q~_xxxxxxxxxxxx-KRjzkSnjUmNdSstqoNdrA
+    TENANT_ID=1452a59b-1e9c-xxxxx-xxxxx-fb10b415xxxxx
+    REDIRECT_URI=http://localhost:8000/auth/callback
+
+    # OLLAMA_URL=http://localhost:11434
+    OLLAMA_URL=http://ollama:11434
+    OLLAMA_MODEL=deepseek-coder:1.3b #mistral:7b-instruct
+
+# Authentication
+Used Microsoft Entra ID for Authentication.
+step to try it out.
+    1. Create an app registration and get the above required value
+    or 
+    will share mine if required.
+
+    2. open fast api docs : http://localhost:8000/docs#
+    3. open in a new tab: http://localhost:8000/auth/login
+        a. enter MS cred and get the token.
+        b. copy id token
+        c. tap the authorize button in top right corner and auth using the id token copied earlier.
+        d. test the protected route
+    4. Note: Authenication dependency is not integrated to all the route as of now, consider protect route for demo.

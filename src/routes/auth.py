@@ -36,11 +36,10 @@ async def refresh_token_endpoint(refresh_token: str):
     result = get_access_token_using_refresh_token(refresh_token)
     return result
 
-@router.get("/auth/userinfo", tags=["Authentication"])
+@router.get("/userinfo", tags=["Authentication"])
 async def user_info(id_token: str = Header(...)):
     """
-    Retrieve user information from the access token.
-    Access token is passed in the header as 'id_token'.
+    Retrieve user information from the access token..
     """
     user_data = await decode(id_token)
     if not user_data:
