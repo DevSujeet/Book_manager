@@ -1,7 +1,7 @@
 #!/bin/bash
 
 set -e
-
+echo "Using model: $OLLAMA_MODEL"
 # Start Ollama server in background
 echo "Starting Ollama server..."
 ollama serve &

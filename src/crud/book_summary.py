@@ -3,10 +3,71 @@ from psycopg2 import IntegrityError
 from sqlalchemy import and_, asc
 from src.crud.base_curd import BaseCRUD
 from src.models.book_summary import BookSummary
-from src.schemas.book_summary import BookSummaryCreate
+from src.schemas.book_summary import BookSummaryCreate, BookSummaryResponse
+from src.schemas.pagination.pagination import PageParams, paginate
 
 
 class BookSummaryCRUD(BaseCRUD):
+    def get_all_summary(self, page_params:PageParams):
+        '''
+        Get all book summaries with pagination.
+        '''
+        # filters = []
+        # query = self.db_session.query(BookSummary).filter(and_(*filters))
+        # total_count = query.count()
+        # if page_params:
+        #     query = query.offset(page_params.skip).limit(page_params.limit)
+        # book_summary_list = query.all()
+        # return paginate(book_summary_list, page_params, total_count)
+        query = self.db_session.query(BookSummary)
+        return paginate(page_params=page_params, query=query, ResponseSchema=BookSummaryResponse, model=BookSummary)
+        
+    
+    def get_book_summary_by_id(self, id:str):
+        '''
+        Get a book summary by ID.
+        '''
+        if not id:
+            raise HTTPException(status_code=400, detail="summary ID must be provided")
+        
+        filters = [BookSummary.id == id]
+        query = self.db_session.query(BookSummary).filter(and_(*filters))
+        book_summary = query.first()
+        if book_summary:
+            return book_summary
+        else:
+            raise HTTPException(status_code=404, detail="Book summary not found")
+        
+    def get_book_summary_by_book_id(self, book_id:str):
+        '''
+        Get a book summary by book ID.
+        '''
+        if not book_id:
+            raise HTTPException(status_code=400, detail="Book ID must be provided")
+        
+        filters = [BookSummary.book_id == book_id]
+        query = self.db_session.query(BookSummary).filter(and_(*filters))
+        book_summary = query.first()
+        if book_summary:
+            return book_summary
+        else:
+            raise HTTPException(status_code=404, detail="Book summary not found")
+        
+    def get_book_summary_by_user_id(self, user_id:str):
+        '''
+        Get a book summary by user ID.
+        '''
+        if not user_id:
+            raise HTTPException(status_code=400, detail="User ID must be provided")
+        filters = [BookSummary.user_id == user_id]
+        query = self.db_session.query(BookSummary).filter(and_(*filters))
+        book_summary = query.all()
+        if book_summary:
+            return book_summary
+        else:
+            raise HTTPException(status_code=404, detail="Book summary not found")
+
+
     def create_book_summary(self, book_summary:BookSummaryCreate):
         try:
             book_summary_obj = BookSummary(**book_summary.model_dump(exclude={}))
